@@ -7,19 +7,19 @@ const laptopData = JSON.parse(json);
 
 const server = http.createServer((req, res) => {
   const pathname = url.parse(req.url, true).pathname;
-  const query = url.parse(req.url, true).query;
+  const id = url.parse(req.url, true).query.id;
 
-  if (pathname === "/products" || pathname === "") {
+  if (pathname === "/products" || pathname === "/") {
     res.writeHead(200, { "Conten-type": "text/html" });
     res.end("This is the products page");
-  } else if (pathname === "/laptop") {
+  } else if (pathname === "/laptop" && id < laptopData.length) {
     res.writeHead(200, {
       "Content-type": "text/html"
     });
-    res.end("This is the LAPTOP page");
+    res.end(`This is the LAPTOP page for laptop ${id}`);
   } else {
-    res.writeHead(200, { "Content-type": "text/html" });
-    res.end("This is the response!");
+    res.writeHead(404, { "Content-type": "text/html" });
+    res.end("URL was not found on the server!");
   }
 });
 
