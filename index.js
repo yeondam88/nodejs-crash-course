@@ -48,8 +48,16 @@ const server = http.createServer((req, res) => {
       }
     );
 
-    // URL NOT FOUND
-  } else {
+    // IMAGES
+  } else if (/\.(jpg|jpeg|png|gif)$/i.test(pathname)) {
+    fs.readFile(`${__dirname}/data/img${pathname}`, (err, data) => {
+      res.writeHead(200, { "Content-type": "image/jpg" });
+      res.end(data);
+    });
+  }
+
+  // URL NOT FOUND
+  else {
     res.writeHead(404, { "Content-type": "text/html" });
     res.end("URL was not found on the server!");
   }
